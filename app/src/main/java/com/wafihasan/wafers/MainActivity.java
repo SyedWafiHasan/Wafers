@@ -1,6 +1,7 @@
 package com.wafihasan.wafers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,13 +26,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Adapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements Adapter.OnItemClickListener
+{
     public RecyclerView recyclerView;
     public Adapter adapter;
     public ArrayList<Items> itemsArrayList;
     public RequestQueue requestQueue;
     public static final String TAG = "Tag";
     public static final String BASE_URL = "https://pixabay.com/api/?key=13664094-f5ac3ff9c5a471443cfc5053a";
+    public static final String APPEND = "&image_type=all&per_page=200&orientation=all";
+    public static final String Q = "&q=";
+    public StringBuilder str = new StringBuilder();
     public String imageUrl;
     public String hiresUrl;
 
@@ -43,14 +51,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemsArrayList = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
-        parseJSON();
+        parseJSON(BASE_URL);
 
     }
 
-    public void parseJSON()
+    public void parseJSON(String query)
     {
-        String url = "https://pixabay.com/api/?key=13664094-f5ac3ff9c5a471443cfc5053a&q=red&image_type=all&per_page=200&orientation=all";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, query, null, new Response.Listener<JSONObject>()
+        {
             @Override
             public void onResponse(JSONObject response)
             {
@@ -130,5 +138,32 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
         requestQueue.cancelAll(TAG);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                itemsArrayList.clear();
+                str.append(BASE_URL).append(Q).append(query).append(APPEND);
+                parseJSON(str.toString());
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newQuery)
+            {
+                return true;
+            }
+        });
+        return true;
     }
 }
