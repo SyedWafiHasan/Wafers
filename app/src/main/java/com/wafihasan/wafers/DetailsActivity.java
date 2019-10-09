@@ -24,7 +24,8 @@ import static com.wafihasan.wafers.MainActivity.EXTRA_SIZE;
 import static com.wafihasan.wafers.MainActivity.EXTRA_URL;
 import static com.wafihasan.wafers.MainActivity.EXTRA_VIEWS;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity
+{
 
     public WallpaperManager wallpaperManager;
     public Button wallpaperButton;
@@ -41,7 +42,8 @@ public class DetailsActivity extends AppCompatActivity {
     String wallpaperURL;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
@@ -60,35 +62,46 @@ public class DetailsActivity extends AppCompatActivity {
 
         wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         wallpaperButton = findViewById(R.id.setWallButton);
-        wallpaperButton.setOnClickListener(new View.OnClickListener() {
+        wallpaperButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                Picasso.get().load(wallpaperURL).into(new Target() {
+            public void onClick(View view)
+            {
+                Picasso.get().load(wallpaperURL).into(new Target()
+                {
                     @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        try {
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                    {
+                        try
+                        {
                             wallpaperManager.setBitmap(bitmap);
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e)
+                        {
                             e.printStackTrace();
                         }
                     }
 
                     @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable)
+                    {
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    public void onPrepareLoad(Drawable placeHolderDrawable)
+                    {
 
                     }
                 });
             }
         });
 
-        dialogButton.setOnClickListener(new View.OnClickListener() {
+        dialogButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 bottomSheetDialog = new BottomSheetDialog(ctx);
                 bottomSheetDialog.setContentView(R.layout.dialog);
                 tv_creator = bottomSheetDialog.findViewById(R.id.tv_user);

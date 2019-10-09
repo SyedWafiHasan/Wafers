@@ -1,6 +1,7 @@
 package com.wafihasan.wafers;
 
-public class Items {
+public class Items
+{
     public String imageUrl;
     public String hiresUrl;
     public int likes;
@@ -10,7 +11,8 @@ public class Items {
     public String userName;
 
 
-    public Items(String imageUrl, String hiresUrl, int likes, int views, int imageWidth, int imageHeight, String userName) {
+    public Items(String imageUrl, String hiresUrl, int likes, int views, int imageWidth, int imageHeight, String userName)
+    {
         this.imageUrl = imageUrl;
         this.hiresUrl = hiresUrl;
         this.likes = likes;
@@ -20,31 +22,38 @@ public class Items {
         this.userName = userName;
     }
 
-    public String getImageUrl() {
+    public String getImageUrl()
+    {
         return imageUrl;
     }
 
-    public String getHiresUrl() {
+    public String getHiresUrl()
+    {
         return hiresUrl;
     }
 
-    public int getLikes() {
+    public int getLikes()
+    {
         return likes;
     }
 
-    public int getViews() {
+    public int getViews()
+    {
         return views;
     }
 
-    public int getImageWidth() {
+    public int getImageWidth()
+    {
         return imageWidth;
     }
 
-    public int getImageHeight() {
+    public int getImageHeight()
+    {
         return imageHeight;
     }
 
-    public String getUserName() {
+    public String getUserName()
+    {
         return userName;
     }
 }

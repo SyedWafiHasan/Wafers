@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:title="Enable NSFW (18+) content"
+        android:key="switch_nsfw"/>
+    <SwitchPreferenceCompat
+        />
+</PreferenceScreen>

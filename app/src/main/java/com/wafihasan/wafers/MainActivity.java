@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -66,14 +67,19 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
     }
 
-    public void parseJSON(String query) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, query, null, new Response.Listener<JSONObject>() {
+    public void parseJSON(String query)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, query, null, new Response.Listener<JSONObject>()
+        {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
+            public void onResponse(JSONObject response)
+            {
+                try
+                {
                     JSONArray jsonArray = response.getJSONArray("hits");
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject hits = jsonArray.getJSONObject(i);
                         imageUrl = hits.getString("webformatURL");
                         hiresUrl = hits.getString("fullHDURL");
@@ -90,13 +96,17 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
                     adapter = new Adapter(MainActivity.this, itemsArrayList);
                     recyclerView.setAdapter(adapter);
                     adapter.setOnItemClickListener(MainActivity.this);
-                } catch (JSONException e) {
+                }
+                catch (JSONException e)
+                {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener()
+        {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error)
+            {
                 error.printStackTrace();
             }
         });
@@ -105,25 +115,29 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         cancelVolley();
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop()
+    {
         super.onStop();
         cancelVolley();
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         cancelVolley();
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position)
+    {
         Intent detailsIntent = new Intent(this, DetailsActivity.class);
         Items clickedItem = itemsArrayList.get(position);
         detailsIntent.putExtra(EXTRA_URL, clickedItem.getHiresUrl());
@@ -135,25 +149,34 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         cancelVolley();
     }
 
-    public void cancelVolley() {
-        requestQueue.cancelAll(new RequestQueue.RequestFilter() {
+    public void cancelVolley()
+    {
+        requestQueue.cancelAll(new RequestQueue.RequestFilter()
+        {
             @Override
-            public boolean apply(Request<?> request) {
+            public boolean apply(Request<?> request)
+            {
                 return true;
             }
         });
         requestQueue.cancelAll(TAG);
+        requestQueue.cancelAll(this);
+        requestQueue.cancelAll(MainActivity.this);
+
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String query)
+            {
                 itemsArrayList.clear();
                 str.append(BASE_URL).append(Q).append(query).append(APPEND);
                 parseJSON(str.toString());
@@ -161,7 +184,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
 
             @Override
-            public boolean onQueryTextChange(String newQuery) {
+            public boolean onQueryTextChange(String newQuery)
+            {
                 return true;
             }
         });
